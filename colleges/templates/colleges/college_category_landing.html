@@ -1,0 +1,87 @@
+{% extends 'public/base.html' %} 
+{% load static %}
+{% block metatitle %}
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>{{meta_details.meta_title}}</title>
+  <meta name="description" content="{{meta_details.meta_description}}" />
+  <meta name="keywords" content="{{meta_details.meta_keywords}}"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+{% endblock %} 
+{% block main %}
+    <div
+    class="hero-arera course-item-height"
+    data-background="{% static 'images/contact-banner.jpg' %}"
+    >
+    <div class="container">
+        <div class="row">
+        <div class="col-xl-12">
+            <div class="hero-course-1-text">
+            <h2>{{category.name}}</h2>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+    <div class="section-college-list academic-courses-area p-relative pt-70 pb-70">
+    <div class="container">
+        <div class="row justify-content-center">
+        <div class="col-xl-4 col-lg-4 text-center">
+            <div class="section-title mb-50">
+            <h2>All <span class="down-mark-line-2">Colleges</span></h2>
+            </div>
+        </div>
+        </div>
+        <div class="row">
+        {% for college in category.colleges.all %}
+        <div class="col-xl-4 col-lg-6 col-md-6 mb-4 pb-sm-2">
+            <div class="academic-box position-relative h-100 bg-white">
+            <div class="academic-thumb">
+                <img src="{{college.image.url}}" alt="image not found" />
+            </div>
+            <div class="academic-content">
+                <div class="academic-content-header">
+                <div class="pb-1">
+                    <i class="fas fa-map-marker-alt pe-2"></i>{{college.location}}
+                </div>
+                <a href="{% url 'college_landing' college.slug %}">
+                    <h3>{{college.name}}</h3>
+                </a>
+                </div>
+                <div class="academic-body">
+                <div class="academic-tutor d-flex align-items-center">
+                    <img
+                    src="{{college.logo.url}}"
+                    alt="image not found"
+                    class="college-logo"
+                    />
+                    <div>
+                    <h6 class="mb-2">
+                        Approved by: <span>{{college.approved_by}}</span>
+                    </h6>
+                    <h6 class="mb-0">
+                        Type: <span>{{college.college_type}}</span>
+                    </h6>
+                    </div>
+                </div>
+                <p>{{college.short_description}}</p>
+                </div>
+                <div class="academic-footer">
+                <div class="course-creadit">
+                    <i class="far fa-award"></i
+                    ><span>{{college.course_offered}} Courses Offered</span>
+                </div>
+                <a
+                    class="edo-course-sec-btn"
+                    href="{% url 'college_landing' college.slug %}"
+                    >View Details</a
+                >
+                </div>
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+    </div>
+{% endblock %}

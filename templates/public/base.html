@@ -1,0 +1,506 @@
+{% load static %}
+{% load custom_tags %}
+{% get_popular_five_colleges as popular_five_colleges %}
+{% get_all_categories as categories %}
+
+<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+  <head>
+    {% block metatitle %}
+    {% endblock %}
+
+    <!-- favicon.ico -->
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="{% static 'images/favicon.png' %}"
+    />
+
+    <!-- CSS here -->
+    <!-- <link rel="stylesheet" href="assets/css/preloader.css"> -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/meanmenu.css' %}" />
+    <!-- <link rel="stylesheet" href="assets/css/animate.min.css"> -->
+    <!-- <link rel="stylesheet" href="assets/css/owl.carousel.min.css"> -->
+    <!-- <link rel="stylesheet" href="assets/css/swiper-bundle.css"> -->
+    <link rel="stylesheet" href="{% static 'css/backToTop.css' %}" />
+    <!-- <link rel="stylesheet" href="assets/css/magnific-popup.css"> -->
+    <!-- <link rel="stylesheet" href="assets/css/huicalendar.css"> -->
+    <!-- <link rel="stylesheet" href="assets/css/nice-select.css"> -->
+    <link rel="stylesheet" href="{% static 'css/fontAwesome5Pro.css' %}" />
+    <!-- <link rel="stylesheet" href="assets/css/flaticon.css"> -->
+    <link rel="stylesheet" href="{% static 'css/default.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+
+  <body>
+    <!-- side toggle start -->
+    <div class="fix">
+      <div class="side-info">
+        <div class="side-info-content">
+          <div class="offset-widget offset-logo mb-0 mb-sm-3">
+            <div class="row align-items-center px-2 px-sm-0">
+              <div class="col-9">
+                <a href="/">
+                  <img src="{% static 'images/logo.png' %}" alt="Logo" />
+                </a>
+              </div>
+              <div class="col-3 text-end">
+                <button class="side-info-close">
+                  <i class="fal fa-times"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="mobile-menu d-xl-none fix"></div>
+          <div class="header-btn mb-20">
+            <a class="edu-thard-btn d-sm-none d-block" href="tel:1234567890"
+              ><i class="fas fa-phone-alt pe-2"></i>Call Now</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="offcanvas-overlay"></div>
+    <div class="offcanvas-overlay-white"></div>
+
+    <header class="header-dev">
+      <div class="university-header-wrapper">
+        <div class="header-area sticky-header">
+          <div class="container">
+            <div class="header-main-wrapper">
+              <div class="row align-items-center">
+                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-3">
+                  <div class="header-logo">
+                    <a href="/"
+                      ><img
+                        class="logo-black"
+                        src="{% static 'images/logo.png' %}"
+                        alt="logo"
+                    /></a>
+                  </div>
+                </div>
+                <div class="col-xl-10 col-lg-10 col-md-9 col-sm-9 col-9">
+                  <div class="header-main-right d-flex justify-content-end">
+                    <div
+                      class="section_header header-btn me-xl-4 d-none d-lg-block"
+                    >
+                      <div class="nav-item dropdown dropdown-mega">
+                        <a
+                          href="javascript:void(0);"
+                          class="courses edu-btn dropdown-toggle menu-bar-link"
+                          id="id-courses"
+                          >All Colleges</a
+                        >
+                        <div
+                          id="courses_drop"
+                          class="dropdown-menu mega-drops courses shadow-sm p-0"
+                        >
+                          <div class="mega-content px-3">
+                            <div class="row">
+                              <div class="mega-menu_base col-4 pe-0 pt-3">
+                                <h5
+                                  class="ps-3 pb-2"
+                                  style="position: absolute; left: 34%"
+                                >
+                                  Colleges list
+                                </h5>
+                                <h5 class="ps-3 pb-2">Category</h5>
+                                <ul
+                                  class="mega-menu mega-menu--multiLevel pl-0 pb-4 col-12 ps-0"
+                                >
+                                  {% for category in categories %}
+                                    <li class="main_li active">
+                                      <a
+                                        href="/category/{{category.slug}}/"
+                                        class="menu-link mega-menu-link"
+                                        aria-haspopup="true"
+                                        >{{category.name}}</a>
+                                      <ul
+                                        class="ps-0 main_menu menu menu-list pb-2"
+                                      >
+                                        {% for college in category.colleges.all %}
+                                          <li class="sub_li active">
+                                            <a
+                                              href="/college/{{college.slug}}/"
+                                              class="menu-link menu-list-link"
+                                              aria-haspopup="true"
+                                            >
+                                              <img
+                                                src="{{college.logo.url}}"
+                                                alt="image not found"
+                                                class="college-logo me-2"
+                                              />{{college.name}}</a
+                                            >
+                                          </li>
+                                        {% endfor %}
+                                      </ul>
+                                    </li>
+                                  {% endfor %}
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="main-menu mr-30">
+                      <nav id="mobile-menu">
+                        <ul>
+                          <li><a href="/">Home</a></li>
+                          <li><a href="/faq/">FAQ</a></li>
+                          <li><a href="/contact/">Contact Us</a></li>
+                          <li
+                            class="menu-item-has-children responsive-colleges d-block d-lg-none"
+                          >
+                            <a href="#!">All Colleges</a>
+                            <ul class="sub-menu">
+                              {% for category in categories %}
+                                <li class="menu-item-has-children">
+                                  <a href="/category/{{category.slug}}/">{{category.name}}</a>
+                                  <ul class="sub-menu">
+                                    {% for college in category.colleges.all %}
+                                      <li>
+                                        <a href="/college/{{college.slug}}/"
+                                          ><img
+                                            src="{{college.logo.url}}"
+                                            alt="image not found"
+                                            class="college-logo me-2"
+                                          />{{college.name}}</a>
+                                      </li>
+                                    {% endfor %}
+                                  </ul>
+                                </li>
+                              {% endfor %}
+                            </ul>
+                          </li>
+                        </ul>
+                      </nav>
+                    </div>
+                    <div class="header-btn">
+                      <a
+                        class="edu-thard-btn d-none d-sm-block"
+                        href="tel:1234567890"
+                        ><i class="fas fa-phone-alt pe-2"></i>Call Now</a
+                      >
+                      <div class="menu-bar ml-30 d-block d-xl-none">
+                        <a
+                          class="side-toggle header-3"
+                          href="javascript:void(0)"
+                        >
+                          <div class="bar-icon header-3">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div
+      class="modal fade py-4 py-lg-0"
+      id="enquiryModal"
+      tabindex="-1"
+      aria-labelledby="enquiryModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div
+          class="modal-content px-4 py-1"
+          style="background: #e2eaff; border-radius: 10px"
+        >
+          <div class="modal-header">
+            <h3>Enquire Now</h3>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="webinar-registration">
+              <div class="webinar-registration-form">
+                <form action="#">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="contact-from-input mb-20">
+                        <input type="text" placeholder="Name" required />
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="contact-from-input mb-20">
+                        <input type="tel" placeholder="Phone" required />
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="contact-from-input mb-20">
+                        <input type="email" placeholder="Email" required />
+                      </div>
+                    </div>
+                    <div class="col-xl-12">
+                      <div class="contact-from-input mb-20">
+                        <textarea
+                          placeholder="Message"
+                          name="message"
+                          required
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div class="colxl-2">
+                      <div class="cont-btn mb-20">
+                        <button type="submit" class="cont-btn">Submit</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <main>
+      {% block main %}
+
+      {% endblock %}
+    </main>
+    <footer>
+      <div class="footer-area py-5">
+        <div class="container pt-lg-3">
+          <div class="footer-main mb-3 mb-lg-5">
+            <div class="row">
+              <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 order-1">
+                <div class="footer-widget f-w1">
+                  <div class="footer-img">
+                    <a href="/">
+                      <img
+                        src="{% static 'images/footer-logo.png' %}"
+                        alt="footer-logo"
+                    /></a>
+                    <p>
+                      Lorem Ipsum is simply dummy text of the printing and
+                      typesetting industry. Lorem Ipsum has been the industry's
+                      standard dummy.
+                    </p>
+                  </div>
+                  <div class="footer-icon">
+                    <a href="https://www.facebook.com" target="_blank"
+                      ><i class="fab fa-facebook-f"></i
+                    ></a>
+                    <a href="https://twitter.com" target="_blank"
+                      ><i class="fab fa-twitter"></i
+                    ></a>
+                    <a href="https://www.instagram.com" target="_blank"
+                      ><i class="fab fa-instagram"></i
+                    ></a>
+                    <a href="https://www.linkedin.com" target="_blank">
+                      <i class="fab fa-linkedin-in"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-6 order-lg-2 order-sm-3 order-2 mb-4 mb-lg-0">
+                <div class="footer-widget f-w2">
+                  <h3>Popular Colleges</h3>
+                  <ul>
+                    {% for college in popular_five_colleges %}
+                      <li>
+                        <a href="/college/{{college.slug}}/">
+                          {{college.name}}
+                        </a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+              <div
+                class="col-lg-3 col-sm-6 order-lg-2 order-sm-2 order-3 mb-4 mb-sm-0"
+              >
+                <div class="footer-widget f-w4">
+                  <h3>Quick Links</h3>
+                  <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/faq/">FAQ</a></li>
+                    <li><a href="/category/{{categories.0.slug}}/">College</a></li>
+                    <li><a href="/contact/">Contact Us</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="copyright-area">
+            <div class="row">
+              <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                <div class="copyright-text border-line">
+                  <p>
+                    © Developed by
+                    <a target="_blank" href="https://www.nexevo.in/"
+                      ><span>Nexevo Technologies</span></a
+                    >
+                  </p>
+                </div>
+              </div>
+              <div class="col-xl-4 col-lg-4 col-sm-6">
+                <div class="copy-right-support border-line-2">
+                  <div class="copy-right-svg"> 
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="43.945"
+                      height="50"
+                      viewBox="0 0 43.945 50"
+                    >
+                      <g id="headphones" transform="translate(-31)">
+                        <g
+                          id="Group_2171"
+                          data-name="Group 2171"
+                          transform="translate(36.859 20.508)"
+                        >
+                          <g id="Group_2170" data-name="Group 2170">
+                            <path
+                              id="Path_2983"
+                              data-name="Path 2983"
+                              d="M95.395,210A4.4,4.4,0,0,0,91,214.395v11.914a4.395,4.395,0,1,0,8.789,0V214.395A4.4,4.4,0,0,0,95.395,210Z"
+                              transform="translate(-91 -210)"
+                              fill="#2467ec"
+                            />
+                          </g>
+                        </g>
+                        <g
+                          id="Group_2173"
+                          data-name="Group 2173"
+                          transform="translate(31 23.669)"
+                        >
+                          <g id="Group_2172" data-name="Group 2172">
+                            <path
+                              id="Path_2984"
+                              data-name="Path 2984"
+                              d="M33.93,243.6a7.268,7.268,0,0,1,.125-1.234A4.386,4.386,0,0,0,31,246.529v6.055a4.386,4.386,0,0,0,3.054,4.163,7.268,7.268,0,0,1-.125-1.234Z"
+                              transform="translate(-31 -242.366)"
+                              fill="#2467ec"
+                            />
+                          </g>
+                        </g>
+                        <g
+                          id="Group_2175"
+                          data-name="Group 2175"
+                          transform="translate(48.578 20.508)"
+                        >
+                          <g id="Group_2174" data-name="Group 2174">
+                            <path
+                              id="Path_2985"
+                              data-name="Path 2985"
+                              d="M227.113,210a4.4,4.4,0,0,0-4.395,4.395v11.914a4.4,4.4,0,0,0,4.395,4.395,4.335,4.335,0,0,0,1.259-.206,4.386,4.386,0,0,1-4.189,3.136h-4.664a4.395,4.395,0,1,0,0,2.93h4.664a7.333,7.333,0,0,0,7.324-7.324V214.395A4.4,4.4,0,0,0,227.113,210Z"
+                              transform="translate(-211 -210)"
+                              fill="#2467ec"
+                            />
+                          </g>
+                        </g>
+                        <g
+                          id="Group_2177"
+                          data-name="Group 2177"
+                          transform="translate(71.891 23.669)"
+                        >
+                          <g id="Group_2176" data-name="Group 2176">
+                            <path
+                              id="Path_2986"
+                              data-name="Path 2986"
+                              d="M449.722,242.366a7.266,7.266,0,0,1,.125,1.234v11.914a7.266,7.266,0,0,1-.125,1.234,4.386,4.386,0,0,0,3.055-4.163v-6.055A4.386,4.386,0,0,0,449.722,242.366Z"
+                              transform="translate(-449.722 -242.366)"
+                              fill="#2467ec"
+                            />
+                          </g>
+                        </g>
+                        <g
+                          id="Group_2179"
+                          data-name="Group 2179"
+                          transform="translate(31)"
+                        >
+                          <g id="Group_2178" data-name="Group 2178">
+                            <path
+                              id="Path_2987"
+                              data-name="Path 2987"
+                              d="M52.973,0A22,22,0,0,0,31,21.973v.037a7.253,7.253,0,0,1,3-1.361,19.02,19.02,0,0,1,37.952,0,7.256,7.256,0,0,1,3,1.361v-.037A22,22,0,0,0,52.973,0Z"
+                              transform="translate(-31)"
+                              fill="#2467ec"
+                            />
+                          </g>
+                        </g>
+                      </g>
+                    </svg>
+                  </div>
+                  <div class="copyright-svg-content">
+                    <p>Have a question? Call us 24/7</p>
+                    <h5><a href="tel:1234567890">1234567890</a></h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-5 col-lg-5 col-md-12">
+                <div class="copyright-subcribe">
+                  <form class="widget__subscribe" id = "subscription_form">
+                    <div class="field">
+                      <input type="email" id = "subscription_email" placeholder="Enter Email" required />
+                    </div>
+                    <button type="submit">
+                      Subscribe<i class="fas fa-paper-plane"></i>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <section class="section-whatsapp">
+      <div class="whatsapp-integration">
+        <a href="https://wa.me/1234567890" target="_blank"
+          ><img
+            src="{% static 'images/whatsapp-mobile.png' %}"
+            alt="Designing Firm"
+            class="img-whatsapp w-75"
+        /></a>
+      </div>
+    </section>
+
+    <!-- back to top -->
+    <div class="progress-wrap">
+      <svg
+        class="progress-circle svg-content"
+        width="100%"
+        height="100%"
+        viewBox="-1 -1 102 102"
+      >
+        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+      </svg>
+    </div>
+    
+    <!-- JS here -->
+    <script src="{% static 'js/vendor/jquery-3.6.0.min.js' %}"></script>
+    <!-- <script src="assets/js/vendor/waypoints.min.js"></scrip> -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/meanmenu.js' %}"></script>
+    <!-- <script src="assets/js/swiper-bundle.min.js"></script> -->
+    <!-- <script src="assets/js/owl.carousel.min.js"></script> -->
+    <!-- <script src="assets/js/magnific-popup.min.js"></script> -->
+    <!-- <script src="assets/js/huicalendar.js"></script> -->
+    <!-- <script src="assets/js/parallax.min.js"></script> -->
+    <script src="{% static 'js/backToTop.js'"></script>
+    <!-- <script src="assets/js/nice-select.min.js"></script> -->
+    <!-- <script src="assets/js/counterup.min.js"></script> -->
+    <!-- <script src="assets/js/ajax-form.js"></script> -->
+    <!-- <script src="assets/js/wow.min.js"></script> -->
+    <!-- <script src="assets/js/isotope.pkgd.min.js"></script> -->
+    <!-- <script src="assets/js/imagesloaded.pkgd.min.js"></script> -->
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
+</html>

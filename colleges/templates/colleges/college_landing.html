@@ -1,0 +1,251 @@
+{% extends 'public/base.html' %} 
+{% load static %}
+{% block metatitle %}
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>{{meta_details.meta_title}}</title>
+  <meta name="description" content="{{meta_details.meta_description}}" />
+  <meta name="keywords" content="{{meta_details.meta_keywords}}"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+{% endblock %} 
+{% block main %}
+  <div class="hero-arera course-item-height college-details-banner" data-background="{% static 'images/contact-banner.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="hero-course-1-text">
+                    <h2>College Details</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <section class="section-college-details course-detalis-area pb-60">
+    <div class="container">
+        <div class="row">
+            <div class=" col-xxl-8 col-xl-8">
+                <div class="course-detalis-wrapper">
+                    <div class="course-heading mb-30">
+                        <div class="academic-body">
+                            <div class="academic-tutor d-flex align-items-start align-items-sm-center">
+                                <img src="{{college.logo.url}}" alt="image not found" class="college-logo">
+                                <div>
+                                <h2 class="mb-5">{{college.name}}</h2>
+                                <h6 class="mb-2">Approved by: <span>{{college.approved_by}}</span></h6>
+                                <h6 class="mb-0">Type: <span>{{college.college_type}}</span></h6>
+                                </div>
+                            </div>
+                            <div class="d-sm-flex flex-wrap align-items-center header-dev">
+                                <a class="edu-btn download-brochure me-sm-3" href = "{{college.brochure.url}}" download><i class="fas fa-download pe-1"></i> Download Brochure</a>
+                                <a class="edu-thard-btn me-sm-3 mt-3 mt-sm-0" href="tel:1234567890"><i class="fas fa-phone-alt pe-2"></i>Call Now</a>
+                                <div class="course-star pt-3 pt-md-0">
+                                    <ul class="d-inline-flex">
+                                        <li><i class="{% if college.rating >= 1 %}fas{% else %}fal{% endif %} fa-star"></i></li>
+                                        <li><i class="{% if college.rating >= 2 %}fas{% else %}fal{% endif %} fa-star"></i></li>
+                                        <li><i class="{% if college.rating >= 3 %}fas{% else %}fal{% endif %} fa-star"></i></li>
+                                        <li><i class="{% if college.rating >= 4 %}fas{% else %}fal{% endif %} fa-star"></i></li>
+                                        <li><i class="{% if college.rating >= 5 %}fas{% else %}fal{% endif %} fa-star"></i></li>
+                                    </ul>
+                                    <span>({{college.reviews_count}} reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- This is there in below also because ofresponsive -->
+                    <div class="course-widget-wrapper mb-40 d-block d-xl-none">
+                        <div class="pb-4"><i class="far fa-map-marker-alt pe-2"></i>{{college.location}}</div>
+                        <div class="course-video-body">
+                            <ul class="mb-0">
+                                <li>
+                                    <div class="course-vide-icon">
+                                        <i class="far fa-award"></i>
+                                        <span>Course Offered</span>
+                                    </div>
+                                    <div class="video-corse-info">
+                                        <span>{{college.course_offered}}</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="course-vide-icon">
+                                        <i class="far fa-chalkboard-teacher"></i>
+                                        <span>Total Faculty</span>
+                                    </div>
+                                    <div class="video-corse-info">
+                                        <span>{{college.total_faculty}}</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="course-vide-icon">
+                                        <i class="far fa-calendar-alt"></i>
+                                        <span>Established In</span>
+                                    </div>
+                                    <div class="video-corse-info">
+                                        <span>{{college.established_in}}</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="course-vide-icon">
+                                        <i class="far fa-money-bill"></i>
+                                        <span>Max. Package</span>
+                                    </div>
+                                    <div class="video-corse-info">
+                                        <span>{{college.max_package}}</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="course-vide-icon">
+                                        <i class="far fa-money-bill-alt"></i>
+                                        <span>Fee Range</span>
+                                    </div>
+                                    <div class="video-corse-info">
+                                        <span>{{college.fee_range}}</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="course-vide-icon">
+                                        <i class="far fa-bullseye"></i>
+                                        <span>NIRF Ranking</span>
+                                    </div>
+                                    <div class="video-corse-info">
+                                        <span>{{college.NIRF_Ranking}}</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="course-description pt-30 pb-30 border-top">
+                        <div class="course-Description">
+                            <h3 class="mb-3">Overview</h3>
+                        </div>
+                        <div class="compus-content mb-10">
+                            {{ college.overview | safe }}
+                        </div>
+                    </div>
+                    <div class="course-learn-wrapper">
+                        <div class="course-learn">
+                            <div class="course-leranm-tittle">
+                                <h3 class="mb-25">Course's List:</h3>
+                            </div>
+                            <div class="course-leran-text">
+                                {{college.course_list | safe}}
+                            </div>
+                        </div>
+                    </div>
+                    {% if college_images %}
+                        <h3 class="pt-30 mb-4">College Gallery</h3>
+                        <div class="row gx-2 gx-sm-3">
+                            {% for college_image in college_images %}
+                                <div class="col-md-4 col-6 pb-sm-3 pb-2">
+                                    <img src="{{college_image.image.url}}" class="img-fluid">
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-xxl-4 col-xl-4 pt-xl-0 pt-4">
+                <div class="course-video-widget">
+                    <!-- This card is there in above also because of responsive -->
+                    <div class="course-widget-wrapper mb-30 d-none d-xl-block">
+                        <div class="course-video-thumb w-img">
+                            <img src="{{college.image.url}}" alt="image not found">
+                        </div>
+                        <div class="pb-4"><i class="far fa-map-marker-alt pe-2"></i>{{college.location}}</div>
+                        <div class="course-video-body">
+                            <ul class="mb-0">
+                                <li>
+                                    <div class="course-vide-icon">
+                                        <i class="far fa-award"></i>
+                                        <span>Course Offered</span>
+                                    </div> 
+                                    <div class="video-corse-info">
+                                        <span>{{college.course_offered}}</span>
+                                    </div>
+                                </li>
+                                <li> 
+                                    <div class="course-vide-icon"> 
+                                        <i class="far fa-chalkboard-teacher"></i> 
+                                        <span>Total Faculty</span> 
+                                    </div> 
+                                    <div class="video-corse-info">
+                                        <span>{{college.total_faculty}}</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="course-vide-icon">
+                                        <i class="far fa-calendar-alt"></i>
+                                        <span>Established In</span>
+                                    </div>
+                                    <div class="video-corse-info">
+                                        <span>{{college.established_in}}</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="course-vide-icon">
+                                        <i class="far fa-money-bill"></i>
+                                        <span>Max. Package</span>
+                                    </div>
+                                    <div class="video-corse-info">
+                                        <span>{{college.max_package}}</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="course-vide-icon">
+                                        <i class="far fa-money-bill-alt"></i>
+                                        <span>Fee Range</span>
+                                    </div>
+                                    <div class="video-corse-info">
+                                        <span>{{college.fee_range}}</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="course-vide-icon">
+                                        <i class="far fa-bullseye"></i>
+                                        <span>NIRF Ranking</span>
+                                    </div>
+                                    <div class="video-corse-info">
+                                        <span>{{college.NIRF_Ranking}}</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="webinar-registration p-4" style="background: #e2eaff;border-radius: 10px;">
+                    <h3 class="mb-25">Enquiry Now</h3>
+                    <div cla`ss="webinar-registration-form">
+                            <form id = "college_landing_enquire_form">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="contact-from-input mb-20">
+                                            <input type="text" placeholder="Name" name = "name" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="contact-from-input mb-20">
+                                            <input type="tel" placeholder="Phone" name = "phone" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="contact-from-input mb-20">
+                                            <input type="email" placeholder="Email" name = "email" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12">
+                                        <div class="contact-from-input mb-20">
+                                            <textarea placeholder="Message" name="message" required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="colxl-2 ">
+                                        <div class="cont-btn mb-20">
+                                            <button type="submit" class="cont-btn">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+{% endblock %}
