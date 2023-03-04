@@ -6,7 +6,7 @@ class College(models.Model):
   name = models.CharField(max_length = 200, unique = True)
   slug = models.SlugField(unique = True)
   location = models.CharField(max_length = 200)
-  image = models.ImageField(upload_to = "images/college", help_text="Select image of size 450x265")
+  image = models.ImageField(upload_to = "images/college", help_text="Select image of size 510x300")
   logo = models.ImageField(upload_to = "images/college/logos", help_text="Select image of size 75x75")
   brochure = models.FileField(upload_to='documents/brochure')
   approved_by = models.CharField(max_length = 200)
